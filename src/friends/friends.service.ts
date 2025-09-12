@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateFriendDto } from './dto/create-friend.dto';
 import { UpdateFriendDto } from './dto/update-friend.dto';
+import { FriendDto } from './dto/friend.dto';
+import { Friend } from './entities/friend.entity';
+import { Repository } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class FriendsService {
-  create(createFriendDto: CreateFriendDto) {
-    return 'This action adds a new friend';
+  constructor(
+    @InjectRepository(Friend)
+    private readonly friendRepository: Repository<Friend>,
+  ) {}
+
+  async create(createFriendDto: CreateFriendDto): Promise<FriendDto> {
+    const friend = this.friendRepository.create(createFriendDto);
+    const newFriend = await this.friendRepository.save(friend);
+
+    return plainToInstance(FriendDto, newFriend);
   }
 
-  findAll() {
-    return `This action returns all friends`;
+  async findAll(): Promise<FriendDto[]> {
+    const friends = await this.friendRepository.find();
+    return plainToInstance(FriendDto, friends);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} friend`;
+  async findOne(id: number): Promise<FriendDto> {
+    const friend = await this.friendRepository.findOneBy({ id });
+
+    if (!friend) {
+      throw new NotFoundException(`Friend with ID "${id}" not found.`);
+    }
+
+    return plainToInstance(FriendDto, friend);
   }
 
-  update(id: number, updateFriendDto: UpdateFriendDto) {
-    return `This action updates a #${id} friend`;
+  async update(id: number, updateFriendDto: UpdateFriendDto) {
+    const friendToUpdate = await this.friendRepository.findOneBy({ id });
+
+    if (!friendToUpdate) {
+      throw new NotFoundException(`Friend with ID "${id}" not found.`);
+    }
+
+    const friend = Object.assign(friendToUpdate, updateFriendDto);
+    const saved = await this.friendRepository.save(friend);
+
+    return plainToInstance(FriendDto, saved);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} friend`;
+  async remove(id: number) {
+    const friendToDelete = await this.friendRepository.findOneBy({ id });
+
+    if (!friendToDelete) {
+      throw new NotFoundException(`Friend with ID "${id}" not found.`);
+    }
+
+    await this.friendRepository.delete(friendToDelete);
   }
 }
