@@ -10,7 +10,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   providers: [AppService],
   imports: [
     FriendsModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,

@@ -6,23 +6,30 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { FriendsService } from './friends.service';
 import { CreateFriendDto } from './dto/create-friend.dto';
 import { UpdateFriendDto } from './dto/update-friend.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { CurrentUser } from '../auth/current-user.decorator';
 
-@Controller('friends')
+@UseGuards(AuthGuard)
+@Controller('api/v1/friend-service/friends')
 export class FriendsController {
   constructor(private readonly friendsService: FriendsService) {}
 
   @Post()
-  create(@Body() createFriendDto: CreateFriendDto) {
-    return this.friendsService.create(createFriendDto);
+  create(
+    @CurrentUser('sub') userId: string,
+    @Body() createFriendDto: CreateFriendDto,
+  ) {
+    return this.friendsService.create(userId, createFriendDto);
   }
 
   @Get()
-  findAll() {
-    return this.friendsService.findAll();
+  findAll(@CurrentUser('sub') userId: string) {
+    return this.friendsService.findAll(userId);
   }
 
   @Get(':id')

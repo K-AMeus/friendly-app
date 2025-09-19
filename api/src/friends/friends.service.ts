@@ -14,15 +14,19 @@ export class FriendsService {
     private readonly friendRepository: Repository<Friend>,
   ) {}
 
-  async create(createFriendDto: CreateFriendDto): Promise<FriendDto> {
+  async create(
+    userId: string,
+    createFriendDto: CreateFriendDto,
+  ): Promise<FriendDto> {
     const friend = this.friendRepository.create(createFriendDto);
+    friend.userId = userId;
     const newFriend = await this.friendRepository.save(friend);
 
     return plainToInstance(FriendDto, newFriend);
   }
 
-  async findAll(): Promise<FriendDto[]> {
-    const friends = await this.friendRepository.find();
+  async findAll(userId: string): Promise<FriendDto[]> {
+    const friends = await this.friendRepository.findBy({ userId });
     return plainToInstance(FriendDto, friends);
   }
 
