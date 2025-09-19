@@ -5,6 +5,15 @@ export class Friend {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Column('uuid')
+  userId!: string;
+
   @Column()
-  name!: string;
+  firstName!: string;
+
+  @Column()
+  lastName!: string;
+
+  @Column('uuid')
+  reminderId!: string;
 }

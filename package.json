@@ -18,11 +18,16 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
+    "@tanstack/eslint-plugin-query": "^5.89.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^16.0.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.89.0",
+    "jose": "^6.1.0"
   }
 }
