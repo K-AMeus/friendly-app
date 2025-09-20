@@ -1,5 +1,9 @@
 export class FriendDto {
   id!: number;
-  firstName!: string;
-  lastName!: string;
+  name!: string;
+  streak!: number;
+  lastContacted!: Date;
+  contactFrequency!: number;
+  groupId!: string;
+  createdAt!: Date;
 }

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { FriendsService } from './friends.service';
 import { CreateFriendDto } from './dto/create-friend.dto';
@@ -33,17 +34,22 @@ export class FriendsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.friendsService.findOne(+id);
+  findOne(@CurrentUser('sub') userId: string, @Param('id') id: string) {
+    return this.friendsService.findOne(userId, id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateFriendDto: UpdateFriendDto) {
-    return this.friendsService.update(+id, updateFriendDto);
+  update(
+    @CurrentUser('sub') userId: string,
+    @Param('id') id: string,
+    @Body() updateFriendDto: UpdateFriendDto,
+  ) {
+    return this.friendsService.update(userId, id, updateFriendDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.friendsService.remove(+id);
+  @HttpCode(204)
+  remove(@CurrentUser('sub') userId: string, @Param('id') id: string) {
+    return this.friendsService.remove(userId, id);
   }
 }

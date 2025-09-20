@@ -1,19 +1,33 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Friend {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column('uuid')
   userId!: string;
 
   @Column()
-  firstName!: string;
+  name!: string;
 
   @Column()
-  lastName!: string;
+  streak: number = 0;
+
+  @Column({ type: 'timestamptz' })
+  lastContacted?: Date;
+
+  @Column()
+  contactFrequency!: number;
 
   @Column('uuid')
-  reminderId!: string;
+  groupId!: string;
+
+  @CreateDateColumn({ type: 'timestamptz' })
+  createdAt!: Date;
 }

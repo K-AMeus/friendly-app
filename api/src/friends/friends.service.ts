@@ -30,8 +30,8 @@ export class FriendsService {
     return plainToInstance(FriendDto, friends);
   }
 
-  async findOne(id: number): Promise<FriendDto> {
-    const friend = await this.friendRepository.findOneBy({ id });
+  async findOne(userId: string, id: string): Promise<FriendDto> {
+    const friend = await this.friendRepository.findOneBy({ id, userId });
 
     if (!friend) {
       throw new NotFoundException(`Friend with ID "${id}" not found.`);
@@ -40,8 +40,11 @@ export class FriendsService {
     return plainToInstance(FriendDto, friend);
   }
 
-  async update(id: number, updateFriendDto: UpdateFriendDto) {
-    const friendToUpdate = await this.friendRepository.findOneBy({ id });
+  async update(userId: string, id: string, updateFriendDto: UpdateFriendDto) {
+    const friendToUpdate = await this.friendRepository.findOneBy({
+      id,
+      userId,
+    });
 
     if (!friendToUpdate) {
       throw new NotFoundException(`Friend with ID "${id}" not found.`);
@@ -53,8 +56,11 @@ export class FriendsService {
     return plainToInstance(FriendDto, saved);
   }
 
-  async remove(id: number) {
-    const friendToDelete = await this.friendRepository.findOneBy({ id });
+  async remove(userId: string, id: string) {
+    const friendToDelete = await this.friendRepository.findOneBy({
+      id,
+      userId,
+    });
 
     if (!friendToDelete) {
       throw new NotFoundException(`Friend with ID "${id}" not found.`);
