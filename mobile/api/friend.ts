@@ -2,18 +2,24 @@ import apiClient from './apiClient';
 
 export interface FriendDto {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  streak: number;
+  lastContacted: Date;
+  contactFrequency: number;
+  groupId: string;
+  createdAt: Date;
 }
 
 export interface CreateFriendDto {
-  firstName: string;
-  lastName: string;
+  name: string;
+  contactFrequency: number;
+  groupId: string;
 }
 
 export interface UpdateFriendDto {
-  firstName: string;
-  lastName: string;
+  name: string;
+  contactFrequency: number;
+  groupId: string;
 }
 
 export const getFriends = async (): Promise<FriendDto[]> => {
