@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons'; // Import the icon set
+import { FontAwesome } from '@expo/vector-icons';
+import tw from '@/lib/tw';
 
 export default function TabLayout() {
   return (
@@ -8,8 +9,9 @@ export default function TabLayout() {
         name="Home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="home" size={size} color={color} />
+          tabBarActiveTintColor: tw.color('primary'),
+          tabBarIcon: ({ size }) => (
+            <FontAwesome name="home" size={size} color={tw.color('primary')} />
           ),
         }}
       />
@@ -17,8 +19,9 @@ export default function TabLayout() {
         name="Feed"
         options={{
           title: 'Feed',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="list" size={size} color={color} />
+          tabBarActiveTintColor: tw.color('primary'),
+          tabBarIcon: ({ size }) => (
+            <FontAwesome name="list" size={size} color={tw.color('primary')} />
           ),
         }}
       />
@@ -26,8 +29,9 @@ export default function TabLayout() {
         name="Settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="cog" size={size} color={color} />
+          tabBarActiveTintColor: tw.color('primary'),
+          tabBarIcon: ({ size }) => (
+            <FontAwesome name="cog" size={size} color={tw.color('primary')} />
           ),
         }}
       />

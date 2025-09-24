@@ -1,46 +1,25 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, ScrollView } from 'react-native';
-import { getFriends } from '../../api/friend';
-import { useQuery } from '@tanstack/react-query';
-import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
-import { ErrorMessage } from '@/components/shared/ErrorMessage';
+import { View } from 'react-native';
 import tw from '@/lib/tw';
 import HomeHeader from '@/components/HomeHeader';
+import UpcomingEvents from '@/components/UpcomingEvents';
+import FriendsList from '@/components/FriendsList';
 
 export default function Home() {
-  const {
-    data: friends,
-    isLoading: friendsLoading,
-    error: friendsError,
-  } = useQuery({ queryKey: ['friends'], queryFn: getFriends });
-
-  if (friendsLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (friendsError || !friends) {
-    return <ErrorMessage />;
-  }
-
   return (
     <SafeAreaView style={tw`flex-1 bg-muted-50`}>
-      <View style={tw`bg-primary`}>
+      <View>
         <HomeHeader />
       </View>
 
-      <ScrollView contentContainerStyle={tw`px-4 py-4`}>
-        <View style={tw`flex-row gap-3 mb-4`}></View>
-        {friends.length > 0 ? (
-          friends.map((f) => (
-            <View key={f.id} style={tw`bg-white rounded-xl p-4 mb-3`}>
-              <Text style={tw`text-brand-900 font-semibold`}>{f.name}</Text>
-            </View>
-          ))
-        ) : (
-          <Text style={tw`text-muted-600`}>No friend yet :(</Text>
-        )}
-      </ScrollView>
+      <View style={tw`items-center pt-5`}>
+        <UpcomingEvents />
+      </View>
+
+      <View style={tw`flex-1 px-4 pt-4`}>
+        <FriendsList />
+      </View>
     </SafeAreaView>
   );
 }

@@ -26,13 +26,13 @@ export const getFriends = async (): Promise<FriendDto[]> => {
   return await apiClient.get(`/api/v1/friend-service/friends`);
 };
 
-export const AddFriend = async (
+export const addFriend = async (
   friend: CreateFriendDto,
 ): Promise<FriendDto> => {
   return await apiClient.post(`/api/v1/friend-service/friends`, friend);
 };
 
-export const UpdateFriend = async (
+export const updateFriend = async (
   friendId: string,
   friend: UpdateFriendDto,
 ): Promise<FriendDto> => {
@@ -42,6 +42,6 @@ export const UpdateFriend = async (
   );
 };
 
-export const DeleteFriend = async (friendId: string): Promise<void> => {
+export const deleteFriend = async (friendId: string): Promise<void> => {
   await apiClient.delete(`/api/v1/friend-service/friends/${friendId}`);
 };
