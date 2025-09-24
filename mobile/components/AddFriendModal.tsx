@@ -10,5 +10,5 @@ export default function AddFriendModal({
   onClose: () => void;
   onAddFriend: (friendData: { name: string; contactFrequency: number }) => void;
 }) {
-  return <Text>AddFriendModal</Text>;
+  return <></>;
 }
