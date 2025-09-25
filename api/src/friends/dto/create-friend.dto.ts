@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateFriendDto {
   @IsNotEmpty()
@@ -6,8 +6,10 @@ export class CreateFriendDto {
   readonly name!: string;
 
   @IsNotEmpty()
+  @IsNumber()
   readonly contactFrequency!: number;
 
-  @IsNotEmpty()
-  readonly groupId!: string;
+  @IsOptional()
+  @IsString()
+  readonly groupId?: string;
 }

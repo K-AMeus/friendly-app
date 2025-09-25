@@ -4,6 +4,6 @@ export class FriendDto {
   streak!: number;
   lastContacted!: Date;
   contactFrequency!: number;
-  groupId!: string;
+  groupId?: string;
   createdAt!: Date;
 }

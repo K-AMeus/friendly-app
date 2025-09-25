@@ -18,8 +18,13 @@ export class FriendsService {
     userId: string,
     createFriendDto: CreateFriendDto,
   ): Promise<FriendDto> {
-    const friend = this.friendRepository.create(createFriendDto);
-    friend.userId = userId;
+    const friend = this.friendRepository.create({
+      ...createFriendDto,
+      userId,
+      lastContacted: new Date(),
+      streak: 0,
+    });
+
     const newFriend = await this.friendRepository.save(friend);
 
     return plainToInstance(FriendDto, newFriend);

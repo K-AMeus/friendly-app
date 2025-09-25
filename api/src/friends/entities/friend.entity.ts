@@ -20,13 +20,13 @@ export class Friend {
   streak: number = 0;
 
   @Column({ type: 'timestamptz' })
-  lastContacted?: Date;
+  lastContacted!: Date;
 
   @Column()
   contactFrequency!: number;
 
-  @Column('uuid')
-  groupId!: string;
+  @Column('uuid', { nullable: true })
+  groupId?: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;

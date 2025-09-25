@@ -13,7 +13,7 @@ export interface FriendDto {
 export interface CreateFriendDto {
   name: string;
   contactFrequency: number;
-  groupId: string;
+  groupId?: string;
 }
 
 export interface UpdateFriendDto {

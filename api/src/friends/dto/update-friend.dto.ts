@@ -6,5 +6,5 @@ export class UpdateFriendDto extends PartialType(CreateFriendDto) {
 
   readonly contactFrequency!: number;
 
-  readonly groupId!: string;
+  readonly groupId?: string;
 }

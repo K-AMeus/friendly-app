@@ -41,7 +41,7 @@ export default function FriendsList({ selectedGroup }: FriendsListProps) {
   const handleAddFriendSubmit = (friendData: {
     name: string;
     contactFrequency: number;
-    groupId: string;
+    groupId?: string;
   }) => {
     void addFriendMutation.mutateAsync(friendData);
   };
