@@ -30,6 +30,11 @@ export class FriendsService {
     return plainToInstance(FriendDto, friends);
   }
 
+  async findAllByGroup(userId: string, groupId: string): Promise<FriendDto[]> {
+    const friends = await this.friendRepository.findBy({ userId, groupId });
+    return plainToInstance(FriendDto, friends);
+  }
+
   async findOne(userId: string, id: string): Promise<FriendDto> {
     const friend = await this.friendRepository.findOneBy({ id, userId });
 

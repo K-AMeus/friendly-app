@@ -22,7 +22,13 @@ export interface UpdateFriendDto {
   groupId: string;
 }
 
-export const getFriends = async (): Promise<FriendDto[]> => {
+export const getFriends = async (groupId?: string): Promise<FriendDto[]> => {
+  if (groupId) {
+    return await apiClient.get(
+      `/api/v1/friend-service/friends?groupId=${groupId}`,
+    );
+  }
+
   return await apiClient.get(`/api/v1/friend-service/friends`);
 };
 

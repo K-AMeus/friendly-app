@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { FriendsService } from './friends.service';
 import { CreateFriendDto } from './dto/create-friend.dto';
@@ -29,7 +30,14 @@ export class FriendsController {
   }
 
   @Get()
-  findAll(@CurrentUser('sub') userId: string) {
+  findAll(
+    @CurrentUser('sub') userId: string,
+    @Query('groupId') groupId?: string,
+  ) {
+    if (groupId) {
+      return this.friendsService.findAllByGroup(userId, groupId);
+    }
+
     return this.friendsService.findAll(userId);
   }
 

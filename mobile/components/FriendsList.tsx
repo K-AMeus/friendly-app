@@ -9,7 +9,11 @@ import { ErrorMessage } from './shared/ErrorMessage';
 import { LoadingSpinner } from './shared/LoadingSpinner';
 import AddFriendModal from './AddFriendModal';
 
-export default function FriendsList() {
+interface FriendsListProps {
+  selectedGroup: string | null;
+}
+
+export default function FriendsList({ selectedGroup }: FriendsListProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const queryClient = useQueryClient();
 
@@ -17,7 +21,10 @@ export default function FriendsList() {
     data: friends,
     isLoading: friendsLoading,
     error: friendsError,
-  } = useQuery({ queryKey: ['friends'], queryFn: getFriends });
+  } = useQuery({
+    queryKey: ['friends', selectedGroup],
+    queryFn: () => getFriends(selectedGroup ?? undefined),
+  });
 
   const addFriendMutation = useMutation({
     mutationFn: addFriend,
@@ -34,6 +41,7 @@ export default function FriendsList() {
   const handleAddFriendSubmit = (friendData: {
     name: string;
     contactFrequency: number;
+    groupId: string;
   }) => {
     void addFriendMutation.mutateAsync(friendData);
   };
