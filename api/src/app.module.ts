@@ -4,10 +4,14 @@ import { AppService } from './app.service';
 import { FriendsModule } from './friends/friends.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GroupsModule } from './groups/groups.module';
+import { SeedModule } from './seed/seed.module';
+import { SeedService } from './seed/seed.service';
+import { Group } from './groups/entities/group.entity';
 
 @Module({
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeedService],
   imports: [
     FriendsModule,
     ConfigModule.forRoot({
@@ -24,6 +28,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Group]),
+    GroupsModule,
+    SeedModule,
   ],
 })
 export class AppModule {}
