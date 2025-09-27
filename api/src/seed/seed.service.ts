@@ -16,10 +16,10 @@ export class SeedService implements OnApplicationBootstrap {
 
   private async seedGroups() {
     const defaultGroups = [
-      { name: 'Family', userId: undefined },
-      { name: 'Friends', userId: undefined },
-      { name: 'School', userId: undefined },
-      { name: 'Work', userId: undefined },
+      { name: '🧑‍🧑‍🧒‍🧒 Family', userId: undefined },
+      { name: '👫 Friends', userId: undefined },
+      { name: '🎓 School', userId: undefined },
+      { name: '💼 Work', userId: undefined },
     ];
 
     for (const groupData of defaultGroups) {
