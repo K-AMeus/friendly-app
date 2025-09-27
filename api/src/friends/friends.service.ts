@@ -31,12 +31,27 @@ export class FriendsService {
   }
 
   async findAll(userId: string): Promise<FriendDto[]> {
-    const friends = await this.friendRepository.findBy({ userId });
+    const friends = await this.friendRepository
+      .createQueryBuilder('friend')
+      .where('friend.userId = :userId', { userId })
+      .orderBy(
+        `"friend"."lastContacted" + "friend"."contactFrequency" * INTERVAL '1 day'`,
+        'ASC',
+      )
+      .getMany();
     return plainToInstance(FriendDto, friends);
   }
 
   async findAllByGroup(userId: string, groupId: string): Promise<FriendDto[]> {
-    const friends = await this.friendRepository.findBy({ userId, groupId });
+    const friends = await this.friendRepository
+      .createQueryBuilder('friend')
+      .where('friend.userId = :userId', { userId })
+      .andWhere('friend.groupId = :groupId', { groupId })
+      .orderBy(
+        `"friend"."lastContacted" + "friend"."contactFrequency" * INTERVAL '1 day'`,
+        'ASC',
+      )
+      .getMany();
     return plainToInstance(FriendDto, friends);
   }
 

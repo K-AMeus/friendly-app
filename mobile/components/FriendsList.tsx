@@ -8,6 +8,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorMessage } from './shared/ErrorMessage';
 import { LoadingSpinner } from './shared/LoadingSpinner';
 import AddFriendModal from './AddFriendModal';
+import ContactStatus from './ContactStatus';
 
 interface FriendsListProps {
   selectedGroup: string | null;
@@ -94,7 +95,12 @@ export default function FriendsList({ selectedGroup }: FriendsListProps) {
                       </Text>
                     </Text>
                   </View>
-                  <View style={tw`items-end`}></View>
+                  <View style={tw`items-end`}>
+                    <ContactStatus
+                      lastContacted={f.lastContacted}
+                      contactFrequency={f.contactFrequency}
+                    />
+                  </View>
                 </View>
               </TouchableOpacity>
             ))}
